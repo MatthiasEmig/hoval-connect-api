@@ -11,7 +11,9 @@ Reverse-engineered API documentation and **Home Assistant custom integration** f
 - `README.md` — API documentation + HA integration install instructions
 - `examples/` — Standalone Python and Bash API client examples
 - `custom_components/hoval_connect/` — Home Assistant integration (HACS-compatible)
+- `blueprints/automation/trcyberoptic/hoval_hv_summer_boost.yaml` — Bundled HA Blueprint (HomeVent summer-boost automation; consumes `hoval_connect.reset_temporary_change`)
 - `docs/openapi-v3.json` — Full OpenAPI 3.1 spec (~450KB, fetched from `/v3/api-docs`)
+- `docs/superpowers/specs/` + `docs/superpowers/plans/` — Design specs and implementation plans for non-trivial features (one file per feature, dated)
 - `tests/` — Unit tests (pure function tests, run without HA installed)
 - `hacs.json` — HACS repository metadata
 - `.github/workflows/` — CI: HACS/Hassfest validation, Ruff linting, automated releases on tags
@@ -53,6 +55,8 @@ The integration lives in `custom_components/hoval_connect/`. User setup is email
 python -m pytest tests/ -v
 ```
 
+On Windows use `python` (not `python3`).
+
 ## Linting
 
 ```bash
@@ -66,6 +70,8 @@ The integration exposes one HA service in addition to platform-standard ones:
 
 - `hoval_connect.reset_temporary_change` — target a `fan` or `climate` entity of a Hoval circuit; the integration translates the entity to its `(plant_id, circuit_path)` and calls `api.reset_temporary_change` (the v3 DELETE on `/v3/.../temporary-change`). Resolution walks `coordinator.data.plants[].circuits[]` because both `plant_id` and `circuit_path` can contain underscores — string-splitting `unique_id` is unreliable. Multiple entities of the same circuit are deduplicated so a target with several entity_ids only fires one DELETE. Plant-level entities (e.g. `binary_sensor.*_online`) are rejected with `ServiceValidationError` because they don't bind to a circuit. The service goes through `coordinator.async_control_and_refresh`, so the optimistic mode override + post-call refresh stay consistent with the rest of the integration.
 
+The bundled Blueprint at `blueprints/automation/trcyberoptic/hoval_hv_summer_boost.yaml` is the primary consumer — it calls this service to end an active summer-boost cleanly. The Blueprint also depends on two user-created helpers (`input_boolean.hoval_hv_boost_active`, `input_datetime.hoval_hv_boost_started_at`); see the README for installation.
+
 ## Running Examples
 
 ```bash
@@ -78,6 +84,7 @@ python examples/hoval_client.py <email> <password>
 - `homeassistant.reload_config_entry` does NOT re-import Python modules — `custom_components/hoval_connect/` code changes only take effect after a full HA core restart (`POST http://supervisor/core/restart`). Clear `__pycache__/` first.
 - HA core logs on HAOS are not in `/config/home-assistant.log` (that file usually doesn't exist). Fetch via `GET http://supervisor/core/logs?tail=N` with `Authorization: Bearer <SUPERVISOR_TOKEN>`. The token isn't exposed in the SSH addon's shell env but is in another addon process: `sudo sh -c 'for p in /proc/[0-9]*/environ; do tr "\0" "\n" <$p 2>/dev/null | grep -m1 SUPERVISOR_TOKEN; done | head -1'`.
 - Release CI (`.github/workflows/release.yml`) triggers on `v*` tag pushes only. Bumping `manifest.json` does nothing on its own — also `git tag vX.Y.Z && git push origin vX.Y.Z`.
+- New integration *services* (e.g. `hoval_connect.reset_temporary_change` added in v0.15.1) are only registered after a full HA Core restart following the HACS update. There is a 10–30 s window after restart where automations triggered by `time_pattern` or state changes will call the new service and fail with `Action <domain>.<service> not found`. The next tick after the registry settles works normally — verify with `GET /api/services` filtering on the integration domain before re-triggering.
 - Live API probes: the SSH addon's `python3` is stdlib-only, but `urllib.request` is enough for the OAuth + Plant-Access-Token + JSON flow. Write the probe locally, `pscp` it to `/tmp/`, run via plink.
 
 ## Authentication Architecture (2-step)
