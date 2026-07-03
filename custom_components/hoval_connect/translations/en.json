@@ -137,7 +137,7 @@
         "name": "Modulation"
       },
       "bl_fa_status": {
-        "name": "Boiler FA status",
+        "name": "Heat generator FA status",
         "state": {
           "hp_off": "WP AUS",
           "hp_heating": "Heizen mit WP",
