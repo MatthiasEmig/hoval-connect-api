@@ -3,7 +3,7 @@
     "step": {
       "user": {
         "title": "Hoval Connect",
-        "description": "Bitte geben Sie Ihre Hoval Connect Kontodaten ein.",
+        "description": "Bitte geben Sie Ihre Hoval Connect Kontodaten ein:",
         "data": {
           "email": "Email",
           "password": "Passwort"
@@ -11,7 +11,7 @@
       },
       "reauth_confirm": {
         "title": "Hoval Connect erneut authentifizieren",
-        "description": "Ihre Sitzung ist abgelaufen. Bitte geben Sie Ihre Kontodaten erneut ein.",
+        "description": "Ihre Sitzung ist abgelaufen. Bitte geben Sie Ihre Kontodaten erneut ein:",
         "data": {
           "email": "Email",
           "password": "Passwort"
@@ -33,9 +33,9 @@
       "init": {
         "title": "Hoval Connect Optionen",
         "data": {
-          "turn_on_mode": "Modus nach dem Einschalten",
-          "override_duration": "Dauer der temporären Programm-Anpassung",
-          "scan_interval": "Abfrageintervall"
+          "turn_on_mode": "Modus nach dem Einschalten:",
+          "override_duration": "Dauer der temporären Programm-Anpassung:",
+          "scan_interval": "Abfrageintervall:"
         },
         "data_description": {
           "turn_on_mode": "Was passieren soll, wenn der Lüfter aus dem Standby eingeschaltet wird.",
