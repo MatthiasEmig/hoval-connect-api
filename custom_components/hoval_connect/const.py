@@ -49,7 +49,7 @@ CIRCUIT_TYPE_NAMES = {
     CIRCUIT_TYPE_FRIWA: "Fresh Water",
     CIRCUIT_TYPE_SOL: "Solar",
     CIRCUIT_TYPE_SOLB: "Solar Buffer",
-    CIRCUIT_TYPE_PS: "Buffer Storage",
+    CIRCUIT_TYPE_PS: "Buffer Tank",
     CIRCUIT_TYPE_GW: "Gateway",
 }
 
