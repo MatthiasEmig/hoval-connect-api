@@ -104,7 +104,7 @@ python examples/hoval_client.py <email> <password>
 
 ## Circuit Types
 
-HK (heating), BL (boiler), WW (warm water), FRIWA (fresh water), HV (ventilation), SOL (solar), SOLB (solar buffer), PS (pool), GW (gateway)
+HK (heating), BL (boiler), WW (warm water), FRIWA (fresh water), HV (ventilation), SOL (solar), SOLB (solar buffer), PS (buffer tank / Pufferspeicher — not "pool"; PF1/PF2 = Pufferfühler top/bottom), GW (gateway)
 
 ## API Behavior Notes
 
@@ -140,5 +140,5 @@ HK (heating), BL (boiler), WW (warm water), FRIWA (fresh water), HV (ventilation
 - Energy stats return empty for HV circuit (likely only relevant for HK/WW/SOL)
 - `business/plants/{id}/plant-structure` needs business role
 - Full OpenAPI 3.1 spec saved at `docs/openapi-v3.json` (also available live at `/v3/api-docs`, no auth required)
-- Non-supported circuit types (FRIWA, SOL, SOLB, PS) have endpoint support in the API but no HA entities yet
+- Non-supported circuit types (FRIWA, SOL, SOLB) have endpoint support in the API but no HA entities yet (PS gained sensor entities in #10)
 - HK climate entity: `set_temperature` sends value as integer — may need adjustment for different HK circuit models (some use tenths of degree)
