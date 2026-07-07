@@ -136,7 +136,7 @@
       "total_energy": {
         "name": "Gesamtenergieverbrauch"
       },
-      "power_consumption_heating": {
+      "current_output_heating": {
         "name": "Aktuelle Leistung Heizen"
       },
       "modulation": {

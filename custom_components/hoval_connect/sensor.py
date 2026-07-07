@@ -257,8 +257,8 @@ CIRCUIT_SENSOR_DESCRIPTIONS: tuple[HovalSensorEntityDescription, ...] = (
         value_fn=lambda c: c.live_values.get("totalEnergy"),
     ),
     HovalSensorEntityDescription(
-        key="power_consumption_heating",
-        translation_key="power_consumption_heating",
+        key="current_output_heating",
+        translation_key="current_output_heating",
         device_class=SensorDeviceClass.POWER,
         native_unit_of_measurement=UnitOfPower.KILO_WATT,
         state_class=SensorStateClass.MEASUREMENT,

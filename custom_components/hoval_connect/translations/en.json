@@ -136,8 +136,8 @@
       "total_energy": {
         "name": "Electrical energy consumed"
       },
-      "power_consumption_heating": {
-        "name": "Current power consumption heating"
+      "current_output_heating": {
+        "name": "Current output heating"
       },
       "modulation": {
         "name": "Modulation"
