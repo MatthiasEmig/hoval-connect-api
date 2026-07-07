@@ -34,6 +34,7 @@ from .const import (
     CIRCUIT_TYPE_BL,
     CIRCUIT_TYPE_HK,
     CIRCUIT_TYPE_HV,
+    CIRCUIT_TYPE_PS,
     CIRCUIT_TYPE_WW,
     DOMAIN,
 )
@@ -117,6 +118,12 @@ CIRCUIT_SENSOR_DESCRIPTIONS: tuple[HovalSensorEntityDescription, ...] = (
         state_class=SensorStateClass.MEASUREMENT,
         circuit_types=frozenset({CIRCUIT_TYPE_HV}),
         value_fn=lambda c: c.live_values.get("humidityTarget"),
+    ),
+    HovalSensorEntityDescription(
+        key="circuit_status",
+        translation_key="circuit_status",
+        icon="mdi:information-outline",
+        value_fn=lambda c: c.live_values.get("status"),
     ),
     HovalSensorEntityDescription(
         key="operation_mode",
@@ -306,6 +313,34 @@ CIRCUIT_SENSOR_DESCRIPTIONS: tuple[HovalSensorEntityDescription, ...] = (
         state_class=SensorStateClass.MEASUREMENT,
         circuit_types=frozenset({CIRCUIT_TYPE_WW}),
         value_fn=lambda c: c.live_values.get("tempSf2Actual"),
+    ),
+    # PS (Buffer Storage) sensors
+    HovalSensorEntityDescription(
+        key="ps_buffer_target",
+        translation_key="ps_buffer_target",
+        device_class=SensorDeviceClass.TEMPERATURE,
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        state_class=SensorStateClass.MEASUREMENT,
+        circuit_types=frozenset({CIRCUIT_TYPE_PS}),
+        value_fn=lambda c: c.live_values.get("bufferTarget"),
+    ),
+    HovalSensorEntityDescription(
+        key="ps_buffer_actual_pf1",
+        translation_key="ps_buffer_actual_pf1",
+        device_class=SensorDeviceClass.TEMPERATURE,
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        state_class=SensorStateClass.MEASUREMENT,
+        circuit_types=frozenset({CIRCUIT_TYPE_PS}),
+        value_fn=lambda c: c.live_values.get("bufferActualPF1"),
+    ),
+    HovalSensorEntityDescription(
+        key="ps_buffer_actual_pf2",
+        translation_key="ps_buffer_actual_pf2",
+        device_class=SensorDeviceClass.TEMPERATURE,
+        native_unit_of_measurement=UnitOfTemperature.CELSIUS,
+        state_class=SensorStateClass.MEASUREMENT,
+        circuit_types=frozenset({CIRCUIT_TYPE_PS}),
+        value_fn=lambda c: c.live_values.get("bufferActualPF2"),
     ),
 )
 

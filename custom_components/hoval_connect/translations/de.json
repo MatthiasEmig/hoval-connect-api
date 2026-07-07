@@ -70,6 +70,9 @@
       "humidity_target": {
         "name": "Feuchtigkeit Soll"
       },
+      "circuit_status": {
+        "name": "Status"
+      },
       "operation_mode": {
         "name": "Betriebsmodus"
       },
@@ -173,6 +176,15 @@
         "name": "Pufferspeicher oben"
       },
       "ww_temp_bottom": {
+        "name": "Pufferspeicher unten"
+      },
+      "ps_buffer_target": {
+        "name": "Pufferspeicher Soll"
+      },
+      "ps_buffer_actual_pf1": {
+        "name": "Pufferspeicher oben"
+      },
+      "ps_buffer_actual_pf2": {
         "name": "Pufferspeicher unten"
       }
     },
